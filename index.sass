@@ -1,0 +1,45 @@
+$default-spacing: 5px
+$default-radius: 5px
+$action-color: #FFD151
+$action-text-color: #191919
+$background-color: #EDB230
+$button-height: 30px
+
+*
+  box-sizing: border-box
+
+body
+  border: 0
+  padding: 0
+  margin: 0
+
+.padding-box
+  padding: $default-spacing
+
+.container
+  width: 300px
+  background-color: $background-color
+
+.distribute-horizontally
+  display: flex
+  *
+    flex-grow: 1
+    margin: $default-spacing
+    &:first-child
+      margin-left: 0
+    &:last-child
+      margin-right: 0
+
+.responsive-image
+  max-width: 100%
+  border-radius: $default-radius
+
+button
+  background-color: $action-color
+  border-radius: $default-radius
+  border: none
+  width: calc(50% - #{$default-spacing})
+  padding: $default-spacing
+  color: $action-text-color
+  font-size: 1em
+  font-weight: bold
