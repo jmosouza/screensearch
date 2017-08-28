@@ -6,8 +6,9 @@ window.onload = () => {
   var screenshotImage = document.querySelector('#screenshot-image')
   var takeScreenshotButton = document.querySelector('#take-screenshot')
 
-  var searchTermLabel = document.querySelector("#search-term")
+  var searchTermLabel = document.querySelector('#search-term')
   var searchItunesButton = document.querySelector('#search-itunes')
+  var searchResultsList = document.querySelector('#search-results')
 
   // Take screenshot and show on extension's window.
   takeScreenshotButton.onclick = () => {
@@ -28,17 +29,29 @@ window.onload = () => {
     })
   }
 
+  // Take search term, fetch iTunes API and show results on extension's window.
   var fetchItunesResults = (term) => {
-    var itunesSearchURL = encodeURI(`https://itunes.apple.com/search?limit=25&term=${term}`)
+    var itunesSearchURL = encodeURI(`https://itunes.apple.com/search?entity=song&limit=25&term=${term}`)
     fetch(itunesSearchURL)
       .then(data => data.json())
       .then(json => {
-        log(json)
-        json.results.forEach(result => {
-          log(result.artistName)
-        })
+        searchResultsList.innerHTML = json.results
+          .map(result => resultHTML(result))
+          .join()
       })
   }
+
+  var resultHTML = (itunesRow) => (
+    `<li>
+      <div>
+        <img src="${itunesRow.artworkUrl30}" width="30" height="30"/>
+      </div>
+      <div>
+        <h4>${itunesRow.artistName}</h4>
+        <a href="${itunesRow.trackViewUrl}">${itunesRow.trackName}</a>
+      </div>
+    </li>`
+  )
 
   const clearScreenshot = () => {
     screenshotImage.src = null
