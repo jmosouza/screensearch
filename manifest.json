@@ -1,13 +1,16 @@
 {
   "name": "João's Coding Test",
   "version": "1.0",
-  "description": "Take page screenshots and search title on iTunes",
+  "description": "Take page screenshots and search title on iTunes - joaomarcelo9393@gmail.com",
   "background": {
     "persistent": false,
     "scripts": ["background.js"]
   },
+  "icons": {
+    "48": "icon48.png"
+  },
   "browser_action": {
-    "default_icon": "camera.png",
+    "default_icon": "icon48.png",
     "default_title": "João's Coding Test",
     "default_popup": "popup.html"
   },
