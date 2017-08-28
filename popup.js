@@ -36,9 +36,10 @@ window.onload = () => {
       .then(data => data.json())
       .then(json => {
         updateSearchMessage(`${json.resultCount} results for "${term}"`)
-        searchResultsList.innerHTML = json.results
+        updateSearchResultsList(json.results
           .map(result => resultHTML(result))
           .join()
+        )
       })
       .catch(error => {
         log(error)
@@ -62,11 +63,16 @@ window.onload = () => {
     searchMessage.textContent = message
   }
 
+  const updateSearchResultsList = (listHTML) => {
+    searchResultsList.innerHTML = listHTML
+  }
+
   const clearScreenshot = () => {
     screenshotImage.src = null
   }
 
   const clearSearch = () => {
     updateSearchMessage(null)
+    updateSearchResultsList(null)
   }
 }
