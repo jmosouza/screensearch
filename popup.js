@@ -1,14 +1,14 @@
 // Shortcut to the console.log function.
-var log = chrome.extension.getBackgroundPage().console.log
+const log = chrome.extension.getBackgroundPage().console.log
 
 // Need to wait for window to load before adding events to elements.
 window.onload = () => {
-  var screenshotImage = document.querySelector('#screenshot-image')
-  var takeScreenshotButton = document.querySelector('#take-screenshot')
+  const screenshotImage = document.querySelector('#screenshot-image')
+  const takeScreenshotButton = document.querySelector('#take-screenshot')
 
-  var searchMessage = document.querySelector('#search-message')
-  var searchItunesButton = document.querySelector('#search-itunes')
-  var searchResultsList = document.querySelector('#search-results')
+  const searchMessage = document.querySelector('#search-message')
+  const searchItunesButton = document.querySelector('#search-itunes')
+  const searchResultsList = document.querySelector('#search-results')
 
   // Take screenshot and show on extension's window.
   takeScreenshotButton.onclick = () => {
@@ -20,18 +20,18 @@ window.onload = () => {
 
   // Take title and show on extension's window.
   searchItunesButton.onclick = () => {
-    var options = { active: true, currentWindow: true }
-    chrome.tabs.query(options, (tabs) => {
+    const tabQueryOptions = { active: true, currentWindow: true }
+    chrome.tabs.query(tabQueryOptions, (tabs) => {
       clearScreenshot()
-      var tab = tabs[0]
+      const tab = tabs[0]
       updateSearchMessage(`Searching "${tab.title}"...`)
       fetchItunesResults(tab.title)
     })
   }
 
   // Take search term, fetch iTunes API and show results on extension's window.
-  var fetchItunesResults = (term) => {
-    var itunesSearchURL = encodeURI(`https://itunes.apple.com/search?entity=song&limit=20&term=${term}`)
+  const fetchItunesResults = (term) => {
+    const itunesSearchURL = encodeURI(`https://itunes.apple.com/search?entity=song&limit=20&term=${term}`)
     fetch(itunesSearchURL)
       .then(data => data.json())
       .then(json => {
@@ -46,7 +46,7 @@ window.onload = () => {
       })
   }
 
-  var resultHTML = (itunesRow) => (
+  const resultHTML = (itunesRow) => (
     `<li>
       <div>
         <img src="${itunesRow.artworkUrl30}" width="30" height="30"/>
