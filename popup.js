@@ -38,7 +38,7 @@ window.onload = () => {
         updateSearchMessage(`${json.resultCount} results for "${term}"`)
         updateSearchResultsList(json.results
           .map(result => resultHTML(result))
-          .join()
+          .join('')
         )
       })
       .catch(error => {
@@ -48,13 +48,13 @@ window.onload = () => {
   }
 
   const resultHTML = (itunesRow) => (
-    `<li>
-      <div>
+    `<li class="media-item">
+      <div class="media-thumbnail">
         <img src="${itunesRow.artworkUrl30}" width="30" height="30"/>
       </div>
-      <div>
-        <h4>${itunesRow.artistName}</h4>
-        <a href="${itunesRow.trackViewUrl}">${itunesRow.trackName}</a>
+      <div class="media-info">
+        <h3><a href="${itunesRow.trackViewUrl}" target="_blank">${itunesRow.trackName}</a></h3>
+        <p>${itunesRow.artistName}</p>
       </div>
     </li>`
   )

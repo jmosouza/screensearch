@@ -7,8 +7,7 @@ $button-height: 30px
 
 *
   box-sizing: border-box
-
-body
+  color: $action-text-color
   border: 0
   padding: 0
   margin: 0
@@ -40,6 +39,19 @@ button
   border: none
   width: calc(50% - #{$default-spacing})
   padding: $default-spacing
-  color: $action-text-color
   font-size: 1em
   font-weight: bold
+
+ul.unbulletted-list
+  list-style: none
+  padding: 0
+
+.media-item
+  display: flex
+  padding: $default-spacing
+  background-color: $action-color
+  .media-thumbnail
+    flex-grow: 0
+  .media-info
+    padding-left: $default-spacing * 2
+    flex-grow: 1
