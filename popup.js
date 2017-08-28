@@ -6,7 +6,7 @@ window.onload = () => {
   var screenshotImage = document.querySelector('#screenshot-image')
   var takeScreenshotButton = document.querySelector('#take-screenshot')
 
-  var searchTermLabel = document.querySelector('#search-term')
+  var searchMessage = document.querySelector('#search-message')
   var searchItunesButton = document.querySelector('#search-itunes')
   var searchResultsList = document.querySelector('#search-results')
 
@@ -24,20 +24,25 @@ window.onload = () => {
     chrome.tabs.query(options, (tabs) => {
       clearScreenshot()
       var tab = tabs[0]
-      searchTermLabel.textContent = `Searching "${tab.title}"...`
+      updateSearchMessage(`Searching "${tab.title}"...`)
       fetchItunesResults(tab.title)
     })
   }
 
   // Take search term, fetch iTunes API and show results on extension's window.
   var fetchItunesResults = (term) => {
-    var itunesSearchURL = encodeURI(`https://itunes.apple.com/search?entity=song&limit=25&term=${term}`)
+    var itunesSearchURL = encodeURI(`https://itunes.apple.com/search?entity=song&limit=20&term=${term}`)
     fetch(itunesSearchURL)
       .then(data => data.json())
       .then(json => {
+        updateSearchMessage(`${json.resultCount} results for "${term}"`)
         searchResultsList.innerHTML = json.results
           .map(result => resultHTML(result))
           .join()
+      })
+      .catch(error => {
+        log(error)
+        updateSearchMessage(`Error whilte searching "${term}"`)
       })
   }
 
@@ -53,11 +58,15 @@ window.onload = () => {
     </li>`
   )
 
+  const updateSearchMessage = (message) => {
+    searchMessage.textContent = message
+  }
+
   const clearScreenshot = () => {
     screenshotImage.src = null
   }
 
   const clearSearch = () => {
-    searchTermLabel.textContent = null
+    updateSearchMessage(null)
   }
 }
