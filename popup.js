@@ -1,5 +1,11 @@
 // Shortcut to the console.log function.
-const log = chrome.extension.getBackgroundPage().console.log
+// Never launch to the Web Store using the development version, it may crash.
+//
+// DEVELOPMENT VERSION:
+// const log = chrome.extension.getBackgroundPage().console.log
+//
+// STORE VERSION:
+const log = () => {}
 
 // Need to wait for window to load before adding events to elements.
 window.onload = () => {
